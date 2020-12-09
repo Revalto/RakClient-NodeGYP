@@ -775,7 +775,7 @@ DWORD WINAPI DialogBoxThread(PVOID)
 	if(!RegisterClassEx(&wc))
 		return 0;
 
-	hSAMPDlgFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Tahoma");
+	hSAMPDlgFont = CreateFont(18,0,0,0,FW_NORMAL,0,0,0,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,DEFAULT_PITCH|FF_DONTCARE, "Tahoma");
 
 	hwndSAMPDlg = CreateWindowEx(NULL, "dlgWndClass", sampDialog.szTitle, NULL,
 		conRect.right, conRect.top, 400, 300, NULL, NULL, hInstance, NULL);
@@ -1103,7 +1103,7 @@ void ScrShowTextDraw(RPCParameters *rpcParams)
 	bsData.Read(cText, cTextLen);
 	cText[cTextLen] = '\0';
 
-	Log("[ ScrShowTextDraw ]: %s (%d)", cText, wTextID);
+	// Log("[ ScrShowTextDraw ]: %s (%d)", cText, wTextID);
 	
 	if(TextDrawTransmit.byteSelectable)
 		Log("[SELECTABLE-TEXTDRAW] ID: %d, Text: %s.", wTextID, cText);

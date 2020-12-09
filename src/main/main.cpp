@@ -17,7 +17,6 @@ bool chatListening = false;
 /** Callbacks **/
 v8::Local<v8::Function> listenChatFunc;
 
-
 char* ToCString(const v8::String::Utf8Value& value) {
     return *value ? *value : "<string conversion failed>";
 }
@@ -67,6 +66,14 @@ void Connect(const v8::FunctionCallbackInfo<v8::Value>& info) {
     // info.GetReturnValue().Set(nodeConnectionId);
 }
 
+const wchar_t *GetWC(const char *c)
+{
+    const size_t cSize = strlen(c)+1;
+    wchar_t* wc = new wchar_t[cSize];
+    mbstowcs (wc, c, cSize);
+
+    return wc;
+}
 
 void MessageReceived(char* message) {
     const int argc = 1;
@@ -78,7 +85,6 @@ void MessageReceived(char* message) {
 
 void Init(v8::Local<v8::Object> exports) {
     // exports->Set(Nan::New("connect").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(Connect)->GetFunction());
-    // exports->Set(Nan::NewInstance(v8::Local<v8::FunctionTemplate> Connect));
     NODE_SET_METHOD(exports, "connect", Connect);
 }
 
