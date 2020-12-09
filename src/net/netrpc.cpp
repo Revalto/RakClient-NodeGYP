@@ -805,7 +805,9 @@ DWORD WINAPI DialogBoxThread(PVOID)
 
 void ScrDialogBox(RPCParameters *rpcParams)
 {
-	if(!iGameInited) return;
+	Log("ShowDialog");
+
+	// if(!iGameInited) return;
 
 	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
 	int iBitLength = rpcParams->numberOfBitsOfData;
@@ -826,7 +828,12 @@ void ScrDialogBox(RPCParameters *rpcParams)
 	bsData.Read(sampDialog.szButton2, sampDialog.bButton2Len);
 	sampDialog.szButton2[sampDialog.bButton2Len] = 0;
 
-	stringCompressor->DecodeString(sampDialog.szInfo, 256, &bsData);
+	stringCompressor->DecodeString(sampDialog.szInfo, 0x1000, &bsData);
+
+	Log("[ ScrShowDialog ] ID: %d | Style: %d | Title: %s", sampDialog.wDialogID, sampDialog.bDialogStyle, sampDialog.szTitle);
+	Log("[ ScrShowDialog ] Text: %s", sampDialog.szInfo);
+	Log("[ ScrShowDialog ] Btn1: %s | Btn2: %s", sampDialog.szButton1, sampDialog.szButton2);
+	// MessageReceived(sampDialog);
 
 	switch(sampDialog.bDialogStyle)
 	{
@@ -1096,6 +1103,7 @@ void ScrShowTextDraw(RPCParameters *rpcParams)
 	bsData.Read(cText, cTextLen);
 	cText[cTextLen] = '\0';
 
+	Log("[ ScrShowTextDraw ]: %s (%d)", cText, wTextID);
 	
 	if(TextDrawTransmit.byteSelectable)
 		Log("[SELECTABLE-TEXTDRAW] ID: %d, Text: %s.", wTextID, cText);

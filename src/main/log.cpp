@@ -3,6 +3,9 @@
 
 void Log(char *fmt, ...)
 {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
     char buffer[512];
     memset(buffer, 0, 512);
 

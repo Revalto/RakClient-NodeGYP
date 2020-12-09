@@ -48,7 +48,7 @@ void ConnectAsync() {
     }
 }
 
-void Connect(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+void Connect(const v8::FunctionCallbackInfo<v8::Value>& info) {
     int setLoaded = LoadSettings();
     Log("Settings Loaded %i", setLoaded);
 
@@ -56,7 +56,10 @@ void Connect(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
     strcpy(g_szNickName, settings.server.szNickname);
 
+    Log("NickName: %s", g_szNickName);
+
     ConnectAsync();
+
     // std::thread t1(ConnectAsync);
 
     // t1.join();
@@ -74,8 +77,9 @@ void MessageReceived(char* message) {
 }
 
 void Init(v8::Local<v8::Object> exports) {
-    exports->Set(Nan::New("connect").ToLocalChecked(),
-                 Nan::New<v8::FunctionTemplate>(Connect)->GetFunction());
+    // exports->Set(Nan::New("connect").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(Connect)->GetFunction());
+    // exports->Set(Nan::NewInstance(v8::Local<v8::FunctionTemplate> Connect));
+    NODE_SET_METHOD(exports, "connect", Connect);
 }
 
 

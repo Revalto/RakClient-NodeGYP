@@ -1,6 +1,11 @@
 const { connect } = require('./build/Debug/samp');
-connect(message);
 
-function message(msg) {
-    console.log('JAVASCRIPT MSG', msg);
+const onCallbackSAMP = (msg) => {
+    console.log(`[ onCallbackSAMP ]: ${msg}`);
 }
+
+const start = () => {
+    connect(onCallbackSAMP);
+}
+
+start();

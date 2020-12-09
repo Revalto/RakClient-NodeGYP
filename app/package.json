@@ -8,6 +8,6 @@
     "debug": "node-gyp --python=\"C:\\Python27\" build --debug"
   },
   "dependencies": {
-    "nan": "^2.11.1"
+    "nan": "^2.14.2"
   }
 }
